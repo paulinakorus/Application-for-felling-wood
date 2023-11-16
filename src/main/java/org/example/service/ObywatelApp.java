@@ -113,10 +113,9 @@ public class ObywatelApp extends JFrame{
         String date = dtf.format(now);
         List<Tree> treeList = new ArrayList<>();
         String status = null;
-        Registration registration = new Registration(++registrationsNumber, this.id_obywatel, treeList, status, date);
+        currentRegistration = new Registration(++registrationsNumber, this.id_obywatel, treeList, status, date);
         setUpLabels();
     }
-
 
     private void setUpLabels(){
         id_obywatela1L.setText(String.format("Obywatel ID: " + this.id_obywatel));
@@ -130,9 +129,6 @@ public class ObywatelApp extends JFrame{
                 return true;
         }
         return false;
-    }
-    public void addRegistration(Registration registration){
-
     }
 
     public List<Registration> readRegistration() throws FileNotFoundException {
