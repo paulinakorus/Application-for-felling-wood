@@ -5,6 +5,7 @@ import org.example.model.Registration;
 import org.example.model.Report;
 import org.example.model.Tree;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,6 +22,27 @@ public class KierownikApp {
     private String reportFile = "reports.txt";
     private static int decisionsNumber = 0;
     private static int kierownikNumber = 0;
+    private JPanel kierownikPanel;
+    private JTable table;
+    private JButton previousRegButton;
+    private JButton readButton;
+    private JButton nextRegButton;
+    private JButton noApproveButton;
+    private JButton approveButton;
+    private JButton prevReportB;
+    private JButton nextReportB;
+    private JLabel kierownikLabel;
+    private JLabel registrationLabel;
+    private JLabel id_registrationLabel;
+    private JLabel id_obywatelLabel;
+    private JLabel statusLabel;
+    private JLabel dateLabel;
+    private JScrollPane ScrollPane;
+    private JLabel treeListLabel;
+    private JLabel id_reportLabel;
+    private JLabel id_registrationLabel2;
+    private JLabel descriptionLabel;
+    private JLabel decisionLabel;
 
     public KierownikApp(){
         this(null);
