@@ -63,7 +63,7 @@ public class ObywatelApp extends JFrame{
         this.setVisible(true);                                         // making frame visible
         this.add(obywatelPanel);
 
-        obywatelLabel.setText(String.format("Obywatel ID: " + this.id_obywatel + " Name: " + this.name));
+        obywatelLabel.setText(String.format("Obywatel " + this.id_obywatel + " : " + this.name));
         newRegistration();
     }
     public void writeRegistration(List<Registration> registrationList) throws IOException {
@@ -99,18 +99,28 @@ public class ObywatelApp extends JFrame{
         addRegistration(registration);
     }
 
+
     private void setUpLabels(){
         id_obywatela1L.setText(String.format("Obywatel ID: " + this.id_obywatel));
         id_registration1L.setText(String.format("Registration ID: " + registrationsNumber));
     }
 
+    public Boolean existRegistration(Registration newRegistration) throws FileNotFoundException {
+        List<Registration> registrationList = readRegistration();
+        for (Registration registration: registrationList){
+            if(registration.getId_registration() == newRegistration.getId_registration())
+                return true;
+        }
+        return false;
+    }
     public void addRegistration(Registration registration){
         insertRegistrationB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == insertRegistrationB){
                     try {
-                        registration.createFile("submissioned", true);
+                        if (registration.getTreeList() != null /*&& !existRegistration(registration)*/)
+                            registration.createFile("submissioned", true);
                         newRegistration();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);

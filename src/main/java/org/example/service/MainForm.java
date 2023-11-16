@@ -51,11 +51,7 @@ public class MainForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==kontrolerButton){
-                    try {
-                        ObywatelApp obywatel = new ObywatelApp(kontrolerNameField.getText());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    KontrolerApp obywatel = new KontrolerApp(kontrolerNameField.getText());
                 }
             }
         });
@@ -66,11 +62,7 @@ public class MainForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==kierownikButton){
-                    try {
-                        ObywatelApp obywatel = new ObywatelApp(kierownikNameField.getText());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    KierownikApp obywatel = new KierownikApp(kierownikNameField.getText());
                 }
             }
         });
