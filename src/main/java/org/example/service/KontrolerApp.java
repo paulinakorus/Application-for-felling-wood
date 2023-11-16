@@ -37,6 +37,7 @@ public class KontrolerApp extends JFrame {
     private JLabel descriptionLabel;
     private JLabel id_reportLabel;
     private JScrollPane listTree;
+    private Table treeTableModel;
 
     public KontrolerApp(){
         this(null);
@@ -87,5 +88,11 @@ public class KontrolerApp extends JFrame {
         String description = input.nextLine();
         Report newReport = new Report(++this.reportsNumber, registration.getId_registration(), description);
         newReport.createFile();
+    }
+
+    private void setUpTable(Registration registration){
+        treeTableModel = new Table(registration.getTreeList());
+        table1.setModel(treeTableModel);
+        table1.setAutoCreateRowSorter(false);
     }
 }

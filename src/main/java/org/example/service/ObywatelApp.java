@@ -49,6 +49,7 @@ public class ObywatelApp extends JFrame{
     private JLabel trees2Label;
     private JTable table;
     private JLabel obywatelLabel;
+    private Table treeTableModel;
     public ObywatelApp() throws IOException {
         this(null);
     }
@@ -161,6 +162,12 @@ public class ObywatelApp extends JFrame{
         List<Registration> registrationList = readRegistration();
         registrationList.remove(registration);
         writeRegistration(registrationList);
+    }
+
+    private void setUpTable(Registration registration){
+        treeTableModel = new Table(registration.getTreeList());
+        table.setModel(treeTableModel);
+        table.setAutoCreateRowSorter(false);
     }
 
     //public void editRegistration(){};
