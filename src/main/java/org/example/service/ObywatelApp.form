@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.example.service.ObywatelApp">
+  <grid id="27dc6" binding="obywatelPanel" layout-manager="GridLayoutManager" row-count="14" column-count="11" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="18" width="615" height="420"/>
+    </constraints>
+    <properties>
+      <background color="-5378114"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="d1725" class="javax.swing.JLabel" binding="treeIDL">
+        <constraints>
+          <grid row="10" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <font name="Times New Roman" size="15"/>
+          <foreground color="-16777216"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <component id="c454c" class="javax.swing.JTextField" binding="nameTreeField">
+        <constraints>
+          <grid row="11" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="116" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <foreground color="-16777216"/>
+        </properties>
+      </component>
+      <component id="272d4" class="javax.swing.JLabel" binding="nameTreeL">
+        <constraints>
+          <grid row="10" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="116" height="16"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <font name="Times New Roman" size="16"/>
+          <foreground color="-16777216"/>
+          <text value="Name"/>
+        </properties>
+      </component>
+      <component id="29f80" class="javax.swing.JLabel" binding="diameterLabel">
+        <constraints>
+          <grid row="10" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="89" height="16"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <font name="Times New Roman" size="16"/>
+          <foreground color="-16777216"/>
+          <text value="Diameter"/>
+        </properties>
+      </component>
+      <component id="7fe6b" class="javax.swing.JTextField" binding="diameterTreeField">
+        <constraints>
+          <grid row="11" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="116" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <foreground color="-16777216"/>
+        </properties>
+      </component>
+      <vspacer id="5807">
+        <constraints>
+          <grid row="3" column="6" row-span="11" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="298be" class="javax.swing.JButton" binding="insertRegistrationB">
+        <constraints>
+          <grid row="13" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-8472696"/>
+          <font name="Times New Roman" size="14"/>
+          <foreground color="-16777216"/>
+          <text value="Insert registration"/>
+        </properties>
+      </component>
+      <component id="81107" class="javax.swing.JButton" binding="previousButton">
+        <constraints>
+          <grid row="12" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-8472696"/>
+          <font name="Times New Roman" size="14"/>
+          <foreground color="-16777216"/>
+          <text value="Previous"/>
+        </properties>
+      </component>
+      <component id="3421d" class="javax.swing.JLabel" binding="trees2Label">
+        <constraints>
+          <grid row="8" column="7" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="43" height="44"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <font name="Times New Roman" size="18" style="1"/>
+          <foreground color="-16777216"/>
+          <text value="Trees"/>
+        </properties>
+      </component>
+      <component id="f5cd2" class="javax.swing.JButton" binding="nextButton">
+        <constraints>
+          <grid row="12" column="8" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-8472696"/>
+          <font name="Times New Roman" size="14"/>
+          <foreground color="-16777216"/>
+          <text value="Next"/>
+        </properties>
+      </component>
+      <scrollpane id="69a63">
+        <constraints>
+          <grid row="9" column="7" row-span="3" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-8472696"/>
+          <foreground color="-16777216"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="5f22f" class="javax.swing.JTable" binding="table">
+            <constraints/>
+            <properties>
+              <background color="-8472696"/>
+              <font name="Times New Roman" size="14"/>
+              <foreground color="-16777216"/>
+              <gridColor color="-16777216"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="38ee2" class="javax.swing.JButton" binding="delateButton" default-binding="true">
+        <constraints>
+          <grid row="13" column="8" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-8472696"/>
+          <font name="Times New Roman" size="14"/>
+          <foreground color="-16777216"/>
+          <text value="Delate"/>
+        </properties>
+      </component>
+      <component id="e5d2c" class="javax.swing.JButton" binding="editButton" default-binding="true">
+        <constraints>
+          <grid row="13" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-8472696"/>
+          <font name="Times New Roman" size="14"/>
+          <foreground color="-16777216"/>
+          <text value="Edit"/>
+        </properties>
+      </component>
+      <component id="9edf0" class="javax.swing.JButton" binding="insertTreeB">
+        <constraints>
+          <grid row="12" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-8472696"/>
+          <font name="Times New Roman" size="14"/>
+          <foreground color="-16777216"/>
+          <text value="Insert tree"/>
+        </properties>
+      </component>
+      <component id="55be3" class="javax.swing.JLabel" binding="id_obywatela1L">
+        <constraints>
+          <grid row="6" column="0" row-span="2" col-span="6" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <font name="Times New Roman" size="16"/>
+          <foreground color="-16777216"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <component id="ab0aa" class="javax.swing.JLabel" binding="id_registration1L">
+        <constraints>
+          <grid row="4" column="0" row-span="2" col-span="6" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <font name="Times New Roman" size="16"/>
+          <foreground color="-16777216"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <component id="aea95" class="javax.swing.JLabel" binding="newRegLabel">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-4725020"/>
+          <font name="Times New Roman" size="20" style="1"/>
+          <foreground color="-16777216"/>
+          <labelFor value="69a63"/>
+          <text value="New Registration"/>
+        </properties>
+      </component>
+      <component id="ba62e" class="javax.swing.JLabel" binding="dateL">
+        <constraints>
+          <grid row="7" column="7" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <font name="Times New Roman" size="16"/>
+          <foreground color="-16777216"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <component id="e8d1e" class="javax.swing.JLabel" binding="statusL">
+        <constraints>
+          <grid row="6" column="7" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <font name="Times New Roman" size="16"/>
+          <foreground color="-16777216"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <component id="359cc" class="javax.swing.JLabel" binding="id_obywatela2L">
+        <constraints>
+          <grid row="5" column="7" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <font name="Times New Roman" size="16"/>
+          <foreground color="-16777216"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <component id="cf13" class="javax.swing.JLabel" binding="id_registration2L">
+        <constraints>
+          <grid row="4" column="7" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <font name="Times New Roman" size="16"/>
+          <foreground color="-16777216"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <component id="2fbad" class="javax.swing.JLabel" binding="previousRegistrationL">
+        <constraints>
+          <grid row="3" column="7" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-4725020"/>
+          <font name="Times New Roman" size="20" style="1"/>
+          <foreground color="-16777216"/>
+          <text value="Previous Registrations"/>
+        </properties>
+      </component>
+      <component id="7ed40" class="javax.swing.JLabel" binding="obywatelLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="3" col-span="11" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <font name="Times New Roman" size="24" style="1"/>
+          <foreground color="-16777216"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <component id="44b0e" class="javax.swing.JLabel" binding="treesLabel">
+        <constraints>
+          <grid row="9" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="36" height="44"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-5378114"/>
+          <font name="Times New Roman" size="18" style="1"/>
+          <foreground color="-16777216"/>
+          <text value="Tree"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
