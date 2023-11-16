@@ -37,6 +37,7 @@ public class KontrolerApp extends JFrame {
     private JLabel descriptionLabel;
     private JLabel id_reportLabel;
     private JScrollPane listTree;
+    private JButton readButton;
     private Table treeTableModel;
 
     public KontrolerApp(){

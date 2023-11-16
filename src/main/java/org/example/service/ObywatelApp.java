@@ -49,6 +49,7 @@ public class ObywatelApp extends JFrame{
     private JLabel trees2Label;
     private JTable table;
     private JLabel obywatelLabel;
+    private JButton readButton;
     private Table treeTableModel;
     public ObywatelApp() throws IOException {
         this(null);
