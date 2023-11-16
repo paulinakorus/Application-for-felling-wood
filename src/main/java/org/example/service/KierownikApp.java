@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
-public class KierownikApp {
+public class KierownikApp extends JFrame{
     private int id;
     private String name;
     private String regFile = "registrations.txt";
@@ -50,6 +50,15 @@ public class KierownikApp {
     public KierownikApp(String name){
         this.id = ++kierownikNumber;
         this.name = name;
+
+        this.setTitle("KierownikApp");                                  // set title of frame
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);           // exit out off application
+        this.setResizable(false);                                      // preventing frame from being resized
+        this.setSize(700, 500);                            // setting size
+        this.setVisible(true);                                         // making frame visible
+        this.add(kierownikPanel);
+
+        kierownikLabel.setText(String.format("Kierownik nr " + this.id + " : " + this.name));
     }
 
     public List<Registration> readRegistration() throws FileNotFoundException {

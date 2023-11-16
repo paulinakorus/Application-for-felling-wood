@@ -53,6 +53,8 @@ public class KontrolerApp extends JFrame {
         this.setSize(700, 500);                            // setting size
         this.setVisible(true);                                         // making frame visible
         this.add(kontrolerPanel);
+
+        kontrolerLabel.setText(String.format("Kontroler nr " + this.id + " : " + this.name));
     }
 
     public List<Registration> readRegistration() throws FileNotFoundException {
@@ -96,4 +98,5 @@ public class KontrolerApp extends JFrame {
         table1.setModel(treeTableModel);
         table1.setAutoCreateRowSorter(false);
     }
+
 }
