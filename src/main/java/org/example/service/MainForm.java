@@ -3,6 +3,7 @@ package org.example.service;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MainForm extends JFrame{
     private JButton obywatelButton;
@@ -35,7 +36,11 @@ public class MainForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==obywatelButton){
-                    ObywatelApp obywatel = new ObywatelApp(obywatelNameField.getText());
+                    try {
+                        ObywatelApp obywatel = new ObywatelApp(obywatelNameField.getText());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });
@@ -46,7 +51,11 @@ public class MainForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==kontrolerButton){
-                    ObywatelApp obywatel = new ObywatelApp(kontrolerNameField.getText());
+                    try {
+                        ObywatelApp obywatel = new ObywatelApp(kontrolerNameField.getText());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });
@@ -57,7 +66,11 @@ public class MainForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==kierownikButton){
-                    ObywatelApp obywatel = new ObywatelApp(kierownikNameField.getText());
+                    try {
+                        ObywatelApp obywatel = new ObywatelApp(kierownikNameField.getText());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });

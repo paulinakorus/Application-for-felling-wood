@@ -49,10 +49,10 @@ public class ObywatelApp extends JFrame{
     private JLabel trees2Label;
     private JTable table;
     private JLabel obywatelLabel;
-    public ObywatelApp(){
+    public ObywatelApp() throws IOException {
         this(null);
     }
-    public ObywatelApp(String name){
+    public ObywatelApp(String name) throws IOException {
         this.id_obywatel = ++obywatelNumber;
         this.name = name;
 
@@ -62,6 +62,9 @@ public class ObywatelApp extends JFrame{
         this.setSize(700, 500);                            // setting size
         this.setVisible(true);                                         // making frame visible
         this.add(obywatelPanel);
+
+        obywatelLabel.setText(String.format("Obywatel ID: " + this.id_obywatel + " Name: " + this.name));
+        newRegistration();
     }
     public void writeRegistration(List<Registration> registrationList) throws IOException {
         File file = new File(this.nameFile);
@@ -82,16 +85,39 @@ public class ObywatelApp extends JFrame{
         List<Tree> treeList = new ArrayList<>();
         String status = null;
         Registration registration = new Registration(++registrationsNumber, this.id_obywatel, treeList, status, date);
+        setUpLabels();
 
         insertTreeB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == insertTreeB){
                     registration.insertTree(nameTreeField.getText(), Double.parseDouble(diameterTreeField.getText()));
+                    System.out.println(nameTreeField.getText() + " " + Double.parseDouble(diameterTreeField.getText()));
                 }
             }
         });
-        registration.createFile("submissioned", true);
+        addRegistration(registration);
+    }
+
+    private void setUpLabels(){
+        id_obywatela1L.setText(String.format("Obywatel ID: " + this.id_obywatel));
+        id_registration1L.setText(String.format("Registration ID: " + registrationsNumber));
+    }
+
+    public void addRegistration(Registration registration){
+        insertRegistrationB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == insertRegistrationB){
+                    try {
+                        registration.createFile("submissioned", true);
+                        newRegistration();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
     }
 
     public List<Registration> readRegistration() throws FileNotFoundException {
