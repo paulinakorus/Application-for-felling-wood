@@ -76,45 +76,22 @@ public class ObywatelApp extends JFrame{
         }
     }
     public void newRegistration() throws IOException {
-        insertRegistrationB.addActionListener(new ActionListener() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String date = dtf.format(now);
+        List<Tree> treeList = new ArrayList<>();
+        String status = null;
+        Registration registration = new Registration(++registrationsNumber, this.id_obywatel, treeList, status, date);
+
+        insertTreeB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == insertRegistrationB) {
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-                    LocalDateTime now = LocalDateTime.now();
-                    String date = dtf.format(now);
-                    List<Tree> treeList = new ArrayList<>();
-                    String status = null;
-                    Registration registration = new Registration(++registrationsNumber, id_obywatel, treeList, status, date);
-
-
-
-
-                    /* konsola - do usunięcia potem
-                    int con = 1;
-                    while (con == 1){
-                        Scanner input = new Scanner(System.in);
-                        System.out.println("Podaj nazwe i średnice drzewa");
-                        System.out.print("  imie: ");
-                        String nameTree = input.nextLine();
-                        System.out.print("  średnica: ");
-                        double diameter = input.nextDouble();
-
-                        registration.insertTree(nameTree, diameter);
-
-                        System.out.print("Kontynuować?: ");
-                        con = input.nextInt();
-                    }
-                    */
-
-                    try {
-                        registration.createFile("submissioned", true);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                if(e.getSource() == insertTreeB){
+                    registration.insertTree(nameTreeField.getText(), Double.parseDouble(diameterTreeField.getText()));
                 }
             }
         });
+        registration.createFile("submissioned", true);
     }
 
     public List<Registration> readRegistration() throws FileNotFoundException {
