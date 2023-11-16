@@ -51,6 +51,7 @@ public class ObywatelApp extends JFrame{
     private JLabel obywatelLabel;
     private JButton readButton;
     private Table treeTableModel;
+    private Registration currentRegistration;
     public ObywatelApp() throws IOException {
         this(null);
     }
@@ -65,7 +66,8 @@ public class ObywatelApp extends JFrame{
         this.setVisible(true);                                         // making frame visible
         this.add(obywatelPanel);
 
-        obywatelLabel.setText(String.format("Obywatel " + this.id_obywatel + " : " + this.name));
+        setUpButtons();
+        obywatelLabel.setText(String.format("Obywatel nr " + this.id_obywatel + " : " + this.name));
         newRegistration();
     }
     public void writeRegistration(List<Registration> registrationList) throws IOException {
@@ -80,6 +82,31 @@ public class ObywatelApp extends JFrame{
                 registration.createFile(registration.getStatus(), true);
         }
     }
+    private void setUpButtons(){
+        insertTreeB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == insertTreeB){
+                    currentRegistration.insertTree(nameTreeField.getText(), Double.parseDouble(diameterTreeField.getText()));
+                    System.out.println(nameTreeField.getText() + " " + Double.parseDouble(diameterTreeField.getText()));
+                }
+            }
+        });
+        insertRegistrationB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == insertRegistrationB){
+                    try {
+                        if (currentRegistration.getTreeList() != null /*&& !existRegistration(registration)*/)
+                            currentRegistration.createFile("submissioned", true);
+                        newRegistration();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+    }
     public void newRegistration() throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
@@ -88,17 +115,6 @@ public class ObywatelApp extends JFrame{
         String status = null;
         Registration registration = new Registration(++registrationsNumber, this.id_obywatel, treeList, status, date);
         setUpLabels();
-
-        insertTreeB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource() == insertTreeB){
-                    registration.insertTree(nameTreeField.getText(), Double.parseDouble(diameterTreeField.getText()));
-                    System.out.println(nameTreeField.getText() + " " + Double.parseDouble(diameterTreeField.getText()));
-                }
-            }
-        });
-        addRegistration(registration);
     }
 
 
@@ -116,20 +132,7 @@ public class ObywatelApp extends JFrame{
         return false;
     }
     public void addRegistration(Registration registration){
-        insertRegistrationB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource() == insertRegistrationB){
-                    try {
-                        if (registration.getTreeList() != null /*&& !existRegistration(registration)*/)
-                            registration.createFile("submissioned", true);
-                        newRegistration();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-            }
-        });
+
     }
 
     public List<Registration> readRegistration() throws FileNotFoundException {
