@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.model.Registration;
 import org.example.model.Tree;
+import org.w3c.dom.ls.LSException;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -35,7 +36,6 @@ public class ObywatelApp extends JFrame{
     private JLabel id_obywatela1L;
     private JLabel id_registration1L;
     private JLabel treesLabel;
-    private JLabel treeIDL;
     private JLabel nameTreeL;
     private JLabel diameterLabel;
     private JLabel newRegLabel;
@@ -52,6 +52,8 @@ public class ObywatelApp extends JFrame{
     private JButton readButton;
     private Table treeTableModel;
     private Registration currentRegistration;
+    private List<Registration> currentRegistrationList;
+    private int currentRegistrationID = 0;
     public ObywatelApp() throws IOException {
         this(null);
     }
@@ -69,6 +71,10 @@ public class ObywatelApp extends JFrame{
         setUpButtons();
         obywatelLabel.setText(String.format("Obywatel nr " + this.id_obywatel + " : " + this.name));
         newRegistration();
+        id_registration2L.setText(String.format("Registration ID: -"));
+        id_obywatela2L.setText(String.format("Obywatel ID: -"));
+        statusL.setText("Status: -");
+        dateL.setText("Date: -");
     }
     public void writeRegistration(List<Registration> registrationList) throws IOException {
         File file = new File(this.nameFile);
@@ -88,7 +94,6 @@ public class ObywatelApp extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == insertTreeB){
                     currentRegistration.insertTree(nameTreeField.getText(), Double.parseDouble(diameterTreeField.getText()));
-                    System.out.println(nameTreeField.getText() + " " + Double.parseDouble(diameterTreeField.getText()));
                 }
             }
         });
@@ -97,7 +102,7 @@ public class ObywatelApp extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == insertRegistrationB){
                     try {
-                        if (currentRegistration.getTreeList() != null /*&& !existRegistration(registration)*/)
+                        if (currentRegistration.getTreeList() != null /*&& !existRegistration(currentRegistration)*/)
                             currentRegistration.createFile("submissioned", true);
                         newRegistration();
                     } catch (IOException ex) {
@@ -106,7 +111,62 @@ public class ObywatelApp extends JFrame{
                 }
             }
         });
+        readButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == readButton){
+                    try {
+                        currentRegistrationList = readRegistration();
+                        currentRegistrationID = 0;
+                        uploadRegistration(0);
+                    } catch (FileNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+        previousButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == previousButton){
+                    if(currentRegistrationID > 0){
+                        try {
+                            uploadRegistration(--currentRegistrationID);
+                        } catch (FileNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            }
+        });
+
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == newRegLabel){
+                    if(currentRegistrationID < currentRegistrationList.size()-2){
+                        try {
+                            uploadRegistration(++currentRegistrationID);
+                        } catch (FileNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            }
+        });
     }
+
+    public void uploadRegistration(int id) throws FileNotFoundException {
+        currentRegistrationList = readRegistration();
+
+        Registration registration = currentRegistrationList.get(id);
+        id_registration2L.setText(String.format("Registration ID: " + registration.getId_registration()));
+        id_obywatela2L.setText(String.format("Obywatel ID: " + this.id_obywatel));
+        statusL.setText("Status: " + registration.getStatus());
+        dateL.setText("Date: " + registration.getDate());
+        setUpTable(registration);
+    }
+
     public void newRegistration() throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();

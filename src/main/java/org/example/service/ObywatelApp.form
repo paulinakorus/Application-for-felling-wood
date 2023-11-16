@@ -10,20 +10,9 @@
     </properties>
     <border type="none"/>
     <children>
-      <component id="d1725" class="javax.swing.JLabel" binding="treeIDL">
-        <constraints>
-          <grid row="10" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-5378114"/>
-          <font name="Times New Roman" size="15"/>
-          <foreground color="-16777216"/>
-          <text value="Label"/>
-        </properties>
-      </component>
       <component id="c454c" class="javax.swing.JTextField" binding="nameTreeField">
         <constraints>
-          <grid row="11" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
+          <grid row="11" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="116" height="30"/>
           </grid>
         </constraints>
@@ -34,7 +23,7 @@
       </component>
       <component id="272d4" class="javax.swing.JLabel" binding="nameTreeL">
         <constraints>
-          <grid row="10" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false">
+          <grid row="10" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="116" height="16"/>
           </grid>
         </constraints>
@@ -176,7 +165,7 @@
       </component>
       <component id="55be3" class="javax.swing.JLabel" binding="id_obywatela1L">
         <constraints>
-          <grid row="6" column="0" row-span="2" col-span="6" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="6" column="0" row-span="2" col-span="6" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-5378114"/>
@@ -187,7 +176,7 @@
       </component>
       <component id="ab0aa" class="javax.swing.JLabel" binding="id_registration1L">
         <constraints>
-          <grid row="4" column="0" row-span="2" col-span="6" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="0" row-span="2" col-span="6" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-5378114"/>
