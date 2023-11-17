@@ -118,7 +118,7 @@ public class ObywatelApp extends JFrame{
                     try {
                         currentRegistrationList = readRegistration();
                         currentRegistrationID = 0;
-                        uploadRegistration(0);
+                        //uploadRegistration(0);
                     } catch (FileNotFoundException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -132,7 +132,7 @@ public class ObywatelApp extends JFrame{
                     if(currentRegistrationID > 0){
                         try {
                             uploadRegistration(--currentRegistrationID);
-                            System.out.println(currentRegistrationID);
+                            //System.out.println(currentRegistrationID);
                         } catch (FileNotFoundException ex) {
                             throw new RuntimeException(ex);
                         }
@@ -148,7 +148,7 @@ public class ObywatelApp extends JFrame{
                     if(currentRegistrationID < currentRegistrationList.size()-1){
                         try {
                             uploadRegistration(++currentRegistrationID);
-                            System.out.println(currentRegistrationID);
+                            //System.out.println(currentRegistrationID);
                         } catch (FileNotFoundException ex) {
                             throw new RuntimeException(ex);
                         }
@@ -163,7 +163,7 @@ public class ObywatelApp extends JFrame{
 
         Registration registration = currentRegistrationList.get(id);
         id_registration2L.setText(String.format("Registration ID: " + registration.getId_registration()));
-        id_obywatela2L.setText(String.format("Obywatel ID: " + this.id_obywatel));
+        id_obywatela2L.setText(String.format("Obywatel ID: " + registration.getId_obywatela()));
         statusL.setText("Status: " + registration.getStatus());
         dateL.setText("Date: " + registration.getDate());
         setUpTable(registration);

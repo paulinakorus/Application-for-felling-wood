@@ -60,6 +60,11 @@ public class KontrolerApp extends JFrame {
         this.add(kontrolerPanel);
 
         kontrolerLabel.setText(String.format("Kontroler nr " + this.id + " : " + this.name));
+        setUpButtons();
+        id_registrationLabel.setText(String.format("Registration ID: -"));
+        id_obywatelLabel.setText(String.format("Obywatel ID: -"));
+        statusLabel.setText("Status: -");
+        dateLabel.setText("Date: -");
     }
 
     public void setUpButtons(){
@@ -71,6 +76,7 @@ public class KontrolerApp extends JFrame {
                         currentRegistrationList = readRegistration();
                         currentRegistrationID = 0;
                         uploadRegistration(0);
+                        //System.out.println(currentRegistrationList.get(0).getStatus());
                     } catch (FileNotFoundException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -84,7 +90,23 @@ public class KontrolerApp extends JFrame {
                     if(currentRegistrationID > 0){
                         try {
                             uploadRegistration(--currentRegistrationID);
-                            System.out.println(currentRegistrationID);
+                            //System.out.println(currentRegistrationID);
+                        } catch (FileNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            }
+        });
+
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == nextButton){
+                    if(currentRegistrationID < currentRegistrationList.size()-1){
+                        try {
+                            uploadRegistration(++currentRegistrationID);
+                            //System.out.println(currentRegistrationID);
                         } catch (FileNotFoundException ex) {
                             throw new RuntimeException(ex);
                         }
@@ -99,7 +121,7 @@ public class KontrolerApp extends JFrame {
 
         Registration registration = currentRegistrationList.get(id);
         id_registrationLabel.setText(String.format("Registration ID: " + registration.getId_registration()));
-        id_obywatelLabel.setText(String.format("Obywatel ID: " + this.id_obywatelLabel));
+        id_obywatelLabel.setText(String.format("Obywatel ID: " + registration.getId_obywatela()));
         statusLabel.setText("Status: " + registration.getStatus());
         dateLabel.setText("Date: " + registration.getDate());
         setUpTable(registration);
