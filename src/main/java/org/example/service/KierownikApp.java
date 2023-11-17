@@ -185,14 +185,11 @@ public class KierownikApp extends JFrame{
     }
 
     public void sendToKontrolerApp(Registration acceptedReg) throws IOException {
-        List<Registration> registrationList = readRegistration();
-        for (Registration registration : registrationList){
-            if (registration == acceptedReg)
-                registration.setStatus("taken");
-            else
-                registration.setStatus("submissioned");
+        for(int i=0; i<currentRegistrationList.size(); i++){
+            if (currentRegistrationList.get(i) == acceptedReg)
+                currentRegistrationList.get(i).setStatus("taken");
         }
-        writeRegistration(registrationList);
+        writeRegistration(currentRegistrationList);
     }
 
     public List<Report> readReports() throws FileNotFoundException {
