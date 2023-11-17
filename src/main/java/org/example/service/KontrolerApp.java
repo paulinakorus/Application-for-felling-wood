@@ -5,6 +5,8 @@ import org.example.model.Report;
 import org.example.model.Tree;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,14 +33,17 @@ public class KontrolerApp extends JFrame {
     private JLabel reportLabel;
     private JLabel registrationsLabel;
     private JLabel id_registrationLabel;
-    private JLabel id_obywatel;
+    private JLabel id_obywatelLabel;
     private JLabel statusLabel;
     private JLabel listTreeLabel;
     private JLabel descriptionLabel;
     private JLabel id_reportLabel;
     private JScrollPane listTree;
     private JButton readButton;
+    private JLabel dateLabel;
     private Table treeTableModel;
+    private int currentRegistrationID = 0;
+    private List<Registration> currentRegistrationList;
 
     public KontrolerApp(){
         this(null);
@@ -57,6 +62,48 @@ public class KontrolerApp extends JFrame {
         kontrolerLabel.setText(String.format("Kontroler nr " + this.id + " : " + this.name));
     }
 
+    public void setUpButtons(){
+        readButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == readButton){
+                    try {
+                        currentRegistrationList = readRegistration();
+                        currentRegistrationID = 0;
+                        uploadRegistration(0);
+                    } catch (FileNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+        previousButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == previousButton){
+                    if(currentRegistrationID > 0){
+                        try {
+                            uploadRegistration(--currentRegistrationID);
+                            System.out.println(currentRegistrationID);
+                        } catch (FileNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    public void uploadRegistration(int id) throws FileNotFoundException {
+        currentRegistrationList = readRegistration();
+
+        Registration registration = currentRegistrationList.get(id);
+        id_registrationLabel.setText(String.format("Registration ID: " + registration.getId_registration()));
+        id_obywatelLabel.setText(String.format("Obywatel ID: " + this.id_obywatelLabel));
+        statusLabel.setText("Status: " + registration.getStatus());
+        dateLabel.setText("Date: " + registration.getDate());
+        setUpTable(registration);
+    }
     public List<Registration> readRegistration() throws FileNotFoundException {
         final Scanner reader = new Scanner(new File(this.regFile));
         List<Registration> registrationList = new ArrayList<>();
