@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
@@ -148,17 +149,14 @@ public class KontrolerApp extends JFrame {
             }
 
             registration = new Registration(parseInt(regist[0]), parseInt(regist[1]), treeList, regist[3], regist[4]);
-            registrationList.add(registration);
+            if (Objects.equals(registration.getStatus(), "taken"))
+                registrationList.add(registration);
         }
         return registrationList;
     }
 
     public void newReport(Registration registration) throws IOException {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Podaj opis");
-        System.out.print("  opis: ");
-        String description = input.nextLine();
-        Report newReport = new Report(++this.reportsNumber, registration.getId_registration(), description);
+        Report newReport = new Report(++this.reportsNumber, registration.getId_registration(), descriptionLabel.getText());
         newReport.createFile();
     }
 
