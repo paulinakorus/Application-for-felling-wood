@@ -132,6 +132,7 @@ public class ObywatelApp extends JFrame{
                     if(currentRegistrationID > 0){
                         try {
                             uploadRegistration(--currentRegistrationID);
+                            System.out.println(currentRegistrationID);
                         } catch (FileNotFoundException ex) {
                             throw new RuntimeException(ex);
                         }
@@ -143,10 +144,11 @@ public class ObywatelApp extends JFrame{
         nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource() == newRegLabel){
-                    if(currentRegistrationID < currentRegistrationList.size()-2){
+                if(e.getSource() == nextButton){
+                    if(currentRegistrationID < currentRegistrationList.size()-1){
                         try {
                             uploadRegistration(++currentRegistrationID);
+                            System.out.println(currentRegistrationID);
                         } catch (FileNotFoundException ex) {
                             throw new RuntimeException(ex);
                         }
