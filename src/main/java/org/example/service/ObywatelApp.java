@@ -40,8 +40,6 @@ public class ObywatelApp extends JFrame{
     private JLabel diameterLabel;
     private JLabel newRegLabel;
     private JLabel previousRegistrationL;
-    private JButton delateButton;
-    private JButton editButton;
     private JLabel id_registration2L;
     private JLabel id_obywatela2L;
     private JLabel statusL;

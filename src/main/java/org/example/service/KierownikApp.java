@@ -26,6 +26,8 @@ public class KierownikApp extends JFrame{
     private static int kierownikNumber = 0;
     private List<Registration> currentRegistrationList;
     private int currentRegistrationID = 0;
+    private List<Report> currentReportList;
+    private int currentReportID = 0;
     private Table treeTableModel;
 
     // GUI
@@ -48,9 +50,11 @@ public class KierownikApp extends JFrame{
     private JLabel treeListLabel;
     private JLabel id_reportLabel;
     private JLabel id_registrationLabel2;
-    private JLabel descriptionLabel;
     private JLabel decisionLabel;
     private JButton acceptButton;
+    private JLabel id_obywatelLabel2;
+    private JButton readReportsButton;
+    private JLabel descriptionLabel;
 
     public KierownikApp(){
         this(null);
@@ -72,6 +76,10 @@ public class KierownikApp extends JFrame{
         id_obywatelLabel.setText(String.format("Obywatel ID: -"));
         statusLabel.setText("Status: -");
         dateLabel.setText("Date: -");
+        id_reportLabel.setText(String.format("Report ID: -"));
+        id_obywatelLabel2.setText(String.format("Obywatel ID: -"));
+        id_registrationLabel2.setText(String.format("Registration ID: -"));
+        descriptionLabel.setText(String.format("Description: -"));
     }
 
     public void setUpButtons(){
@@ -133,8 +141,107 @@ public class KierownikApp extends JFrame{
                 }
             }
         });
+
+        prevReportB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == prevReportB){
+                    if(currentReportID > 0){
+                        try {
+                            uploadReport(--currentReportID);
+                        } catch (FileNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            }
+        });
+
+        nextReportB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == nextReportB){
+                    if(currentReportID < currentReportList.size()-1){
+                        try {
+                            uploadReport(++currentReportID);
+                        } catch (FileNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            }
+        });
+
+        approveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               if(e.getSource() == approveButton){
+                   Decision decision = new Decision(++decisionsNumber, currentReportList.get(currentReportID).getId_registration(), id, currentReportList.get(currentReportID).getDescription());
+                   try {
+                       decision.createFile();
+                   } catch (IOException ex) {
+                       throw new RuntimeException(ex);
+                   }
+                   setFinishedStatus();
+
+                   try {
+                       writeRegistration(currentRegistrationList);
+                   } catch (IOException ex) {
+                       throw new RuntimeException(ex);
+                   }
+
+                   currentReportList.remove(currentReportID);
+                   try {
+                       writeReport(currentReportList);
+                   } catch (IOException ex) {
+                       throw new RuntimeException(ex);
+                   }
+               }
+            }
+        });
+
+        noApproveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == noApproveButton){
+                    setFinishedStatus();
+                    currentReportList.remove(currentReportID);
+                    try {
+                        writeReport(currentReportList);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+
+        readReportsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == readReportsButton){
+                    try {
+                        currentReportList = readReports();
+                        currentReportID = 0;
+                        uploadReport(0);
+                    } catch (FileNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+
     }
 
+    public void setFinishedStatus(){
+        int registrationID = currentReportList.get(currentReportID).getId_registration();
+
+        for (Registration registration : currentRegistrationList){
+            if(registration.getId_registration() == registrationID){
+                registration.setStatus("finished");
+                break;
+            }
+        }
+    }
     public void uploadRegistration(int id) throws FileNotFoundException {
         currentRegistrationList = readRegistration();
 
@@ -144,6 +251,16 @@ public class KierownikApp extends JFrame{
         statusLabel.setText("Status: " + registration.getStatus());
         dateLabel.setText("Date: " + registration.getDate());
         setUpTable(registration);
+    }
+
+    public void uploadReport(int id) throws FileNotFoundException {
+        currentReportList = readReports();
+
+        Report report = currentReportList.get(id);
+        id_reportLabel.setText(String.format("Report ID: " + report.getId_report()));
+        id_obywatelLabel2.setText(String.format("Obywatel ID: " + report.getId_obywatel()));
+        id_registrationLabel2.setText(String.format("Registration ID: " + report.getId_registration()));
+        descriptionLabel.setText(String.format("Description: " + report.getDescription()));
     }
 
     public List<Registration> readRegistration() throws FileNotFoundException {
@@ -186,6 +303,19 @@ public class KierownikApp extends JFrame{
         }
     }
 
+    public void writeReport(List<Report> reportList) throws IOException {
+        File file = new File(this.reportFile);
+        file.createNewFile();
+
+        for (int i=0; i<reportList.size(); i++){
+            Report report = reportList.get(i);
+            if(i==0)
+                report.createFile(false);
+            else
+                report.createFile( true);
+        }
+    }
+
     public void sendToKontrolerApp(Registration acceptedReg) throws IOException {
         for(int i=0; i<currentRegistrationList.size(); i++){
             if (currentRegistrationList.get(i) == acceptedReg)
@@ -205,36 +335,10 @@ public class KierownikApp extends JFrame{
         while (reader.hasNextLine()){
             line = reader.nextLine();
             rep = line.split(",");
-            report = new Report(parseInt(rep[0]), parseInt(rep[1]), rep[2]);
+            report = new Report(parseInt(rep[0]), parseInt(rep[1]), parseInt(rep[2]), rep[3]);
             reportList.add(report);
         }
         return reportList;
-    }
-
-    public void decision(Report report) throws IOException {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Decyzja: ");
-        Boolean dec = input.nextBoolean();
-
-        List<Registration> registrationList = new ArrayList<>();
-        registrationList = readRegistration();
-        Registration registration = registrationList.get(report.getId_registration()-1);
-        if(dec){
-            //
-            Scanner input1 = new Scanner(System.in);
-            System.out.println("Podaj opis");
-            System.out.print("  opis: ");
-            String description = input1.nextLine();
-            //
-
-            Decision decision = new Decision(++decisionsNumber, registration.getId_registration(), this.id, description);
-            decision.createFile();
-            registration.setStatus("finished");
-            writeRegistration(registrationList);
-        }else{
-            registration.setStatus("finished");
-            writeRegistration(registrationList);
-        }
     }
 
     private void setUpTable(Registration registration){

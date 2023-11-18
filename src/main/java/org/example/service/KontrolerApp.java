@@ -130,7 +130,7 @@ public class KontrolerApp extends JFrame {
                     try {
                         if(currentRegistrationList != null){
                             newReport();
-                            currentReport.createFile();
+                            currentReport.createFile(true);
                             ++reportsNumber;
                             currentRegistrationList.get(currentRegistrationID).setStatus("sended");
                             writeRegistration(currentRegistrationList);
@@ -177,8 +177,7 @@ public class KontrolerApp extends JFrame {
             }
 
             registration = new Registration(parseInt(regist[0]), parseInt(regist[1]), treeList, regist[3], regist[4]);
-            if (Objects.equals(registration.getStatus(), "taken"))
-                registrationList.add(registration);
+            registrationList.add(registration);
         }
         return registrationList;
     }
@@ -196,7 +195,7 @@ public class KontrolerApp extends JFrame {
     }
 
     public void newReport() throws IOException {
-        this.currentReport = new Report(this.reportsNumber, currentRegistrationList.get(currentRegistrationID).getId_registration(), descriptionField.getText());
+        this.currentReport = new Report(this.reportsNumber, currentRegistrationList.get(currentRegistrationID).getId_obywatela(), currentRegistrationList.get(currentRegistrationID).getId_registration(), descriptionField.getText());
         setUpReportLabels();
     }
 

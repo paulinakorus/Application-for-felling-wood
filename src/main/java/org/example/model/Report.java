@@ -11,29 +11,31 @@ public class Report {
     private int id_report;
     private int id_registration;
     private String description;
+    private int id_obywatel;
     public Report(){
-        this(0, 0, null);
+        this(0, 0, 0, null);
     }
 
-    public Report(int id_report, int id_registration, String description){
+    public Report(int id_report, int id_obywatel,int id_registration, String description){
         this.id_report = id_report;
-        this.id_registration = id_report;
+        this.id_obywatel = id_obywatel;
+        this.id_registration = id_registration;
         this.description = description;
     }
 
-    public void createFile() throws IOException {
+    public void createFile(Boolean addToExisting) throws IOException {
         File file = new File(this.nameFile);
         if(!file.exists()) {
             file.createNewFile();
-            insertFile();
+            insertFile(addToExisting);
         }else{
-            insertFile();
+            insertFile(addToExisting);
         }
     }
 
-    public void insertFile(){
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nameFile, true))) {
-            writer.write(this.id_report + "," + this.id_registration + "," + this.description + "\n");
+    public void insertFile(Boolean addToExisting){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nameFile, addToExisting))) {
+            writer.write(this.id_report + "," + this.id_obywatel + "," + this.id_registration + "," + this.description + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,5 +71,13 @@ public class Report {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getId_obywatel() {
+        return id_obywatel;
+    }
+
+    public void setId_obywatel(int id_obywatel) {
+        this.id_obywatel = id_obywatel;
     }
 }
