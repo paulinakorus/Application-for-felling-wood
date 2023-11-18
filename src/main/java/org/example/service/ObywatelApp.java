@@ -118,7 +118,7 @@ public class ObywatelApp extends JFrame{
                     try {
                         currentRegistrationList = readRegistration();
                         currentRegistrationID = 0;
-                        //uploadRegistration(0);
+                        uploadRegistration(0);
                     } catch (FileNotFoundException ex) {
                         throw new RuntimeException(ex);
                     }

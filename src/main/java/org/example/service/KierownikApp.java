@@ -24,6 +24,11 @@ public class KierownikApp extends JFrame{
     private String reportFile = "reports.txt";
     private static int decisionsNumber = 0;
     private static int kierownikNumber = 0;
+    private List<Registration> currentRegistrationList;
+    private int currentRegistrationID = 0;
+    private Table treeTableModel;
+
+    // GUI
     private JPanel kierownikPanel;
     private JTable table;
     private JButton previousRegButton;
@@ -46,9 +51,6 @@ public class KierownikApp extends JFrame{
     private JLabel descriptionLabel;
     private JLabel decisionLabel;
     private JButton acceptButton;
-    private List<Registration> currentRegistrationList;
-    private int currentRegistrationID = 0;
-    private Table treeTableModel;
 
     public KierownikApp(){
         this(null);

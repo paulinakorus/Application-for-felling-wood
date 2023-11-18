@@ -19,7 +19,7 @@ public class MainForm extends JFrame{
     private JPanel mainPanel;
 
     public MainForm(){
-        this.setTitle("ObywatelApp");                                  // set title of frame
+        this.setTitle("MainForm");                                  // set title of frame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);           // exit out off application
         this.setResizable(false);                                      // preventing frame from being resized
         this.setSize(700, 500);                            // setting size
@@ -51,7 +51,11 @@ public class MainForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==kontrolerButton){
-                    KontrolerApp obywatel = new KontrolerApp(kontrolerNameField.getText());
+                    try {
+                        KontrolerApp obywatel = new KontrolerApp(kontrolerNameField.getText());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });

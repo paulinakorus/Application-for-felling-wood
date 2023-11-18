@@ -18,6 +18,7 @@
         </constraints>
         <properties>
           <background color="-5378114"/>
+          <font name="Times New Roman" size="14"/>
           <foreground color="-16777216"/>
         </properties>
       </component>
@@ -55,6 +56,7 @@
         </constraints>
         <properties>
           <background color="-5378114"/>
+          <font name="Times New Roman" size="14"/>
           <foreground color="-16777216"/>
         </properties>
       </component>

@@ -22,7 +22,7 @@ public class KontrolerApp extends JFrame {
     private String name;
     private String regFile = "registrations.txt";
     private String reportFile = "reports.txt";
-    private static int reportsNumber = 0;
+    private static int reportsNumber = 1;
     private static int kontrolerNumber = 0;
     private JPanel kontrolerPanel;
     private JTable table1;
@@ -42,14 +42,16 @@ public class KontrolerApp extends JFrame {
     private JScrollPane listTree;
     private JButton readButton;
     private JLabel dateLabel;
+    private JLabel registrationLabel2;
     private Table treeTableModel;
     private int currentRegistrationID = 0;
     private List<Registration> currentRegistrationList;
+    private Report currentReport;
 
-    public KontrolerApp(){
+    public KontrolerApp() throws IOException {
         this(null);
     }
-    public KontrolerApp (String name){
+    public KontrolerApp (String name) throws IOException {
         this.id = ++kontrolerNumber;
         this.name = name;
 
@@ -62,6 +64,8 @@ public class KontrolerApp extends JFrame {
 
         kontrolerLabel.setText(String.format("Kontroler nr " + this.id + " : " + this.name));
         setUpButtons();
+        id_reportLabel.setText(String.format("Report ID: -"));
+        registrationLabel2.setText(String.format("Registration ID: -"));
         id_registrationLabel.setText(String.format("Registration ID: -"));
         id_obywatelLabel.setText(String.format("Obywatel ID: -"));
         statusLabel.setText("Status: -");
@@ -77,8 +81,11 @@ public class KontrolerApp extends JFrame {
                         currentRegistrationList = readRegistration();
                         currentRegistrationID = 0;
                         uploadRegistration(0);
+                        newReport();
                         //System.out.println(currentRegistrationList.get(0).getStatus());
                     } catch (FileNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
@@ -91,8 +98,10 @@ public class KontrolerApp extends JFrame {
                     if(currentRegistrationID > 0){
                         try {
                             uploadRegistration(--currentRegistrationID);
-                            //System.out.println(currentRegistrationID);
+                            newReport();
                         } catch (FileNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
                     }
@@ -107,10 +116,30 @@ public class KontrolerApp extends JFrame {
                     if(currentRegistrationID < currentRegistrationList.size()-1){
                         try {
                             uploadRegistration(++currentRegistrationID);
+                            newReport();
                             //System.out.println(currentRegistrationID);
                         } catch (FileNotFoundException ex) {
                             throw new RuntimeException(ex);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
                         }
+                    }
+                }
+            }
+        });
+
+        sendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == sendButton){
+                    try {
+                        if(currentRegistrationList != null){
+                            newReport().createFile();
+                            reportsNumber++;
+                            currentRegistrationList.remove(currentRegistrationList.get(currentRegistrationID));
+                        }
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
                     }
                 }
             }
@@ -118,8 +147,6 @@ public class KontrolerApp extends JFrame {
     }
 
     public void uploadRegistration(int id) throws FileNotFoundException {
-        currentRegistrationList = readRegistration();
-
         Registration registration = currentRegistrationList.get(id);
         id_registrationLabel.setText(String.format("Registration ID: " + registration.getId_registration()));
         id_obywatelLabel.setText(String.format("Obywatel ID: " + registration.getId_obywatela()));
@@ -155,9 +182,15 @@ public class KontrolerApp extends JFrame {
         return registrationList;
     }
 
-    public void newReport(Registration registration) throws IOException {
-        Report newReport = new Report(++this.reportsNumber, registration.getId_registration(), descriptionLabel.getText());
-        newReport.createFile();
+    public Report newReport() throws IOException {
+        this.currentReport = new Report(this.reportsNumber, currentRegistrationList.get(currentRegistrationID).getId_registration(), descriptionField.getText());
+        setUpReportLabels();
+        return this.currentReport;
+    }
+
+    private void setUpReportLabels(){
+        id_reportLabel.setText(String.format("Report ID: " + currentReport.getId_report()));
+        registrationLabel2.setText(String.format("Registration ID: " + currentReport.getId_registration()));
     }
 
     private void setUpTable(Registration registration){
