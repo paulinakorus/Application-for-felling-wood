@@ -80,11 +80,9 @@ public class KontrolerApp extends JFrame {
                     try {
                         currentRegistrationList = readRegistration();
                         currentRegistrationID = 0;
-                        uploadRegistration(0);
+                        uploadRegistration(currentRegistrationID);
                         newReport();
                         //System.out.println(currentRegistrationList.get(0).getStatus());
-                    } catch (FileNotFoundException ex) {
-                        throw new RuntimeException(ex);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -98,10 +96,9 @@ public class KontrolerApp extends JFrame {
                     if(currentRegistrationID > 0){
                         try {
                             uploadRegistration(--currentRegistrationID);
-                            newReport();
+                            currentReport.setId_registration((currentRegistrationList.get(currentRegistrationID).getId_registration()));
+                            setUpReportLabels();
                         } catch (FileNotFoundException ex) {
-                            throw new RuntimeException(ex);
-                        } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
                     }
@@ -116,11 +113,9 @@ public class KontrolerApp extends JFrame {
                     if(currentRegistrationID < currentRegistrationList.size()-1){
                         try {
                             uploadRegistration(++currentRegistrationID);
-                            newReport();
-                            //System.out.println(currentRegistrationID);
+                            currentReport.setId_registration((currentRegistrationList.get(currentRegistrationID).getId_registration()));
+                            setUpReportLabels();
                         } catch (FileNotFoundException ex) {
-                            throw new RuntimeException(ex);
-                        } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
                     }
@@ -134,9 +129,15 @@ public class KontrolerApp extends JFrame {
                 if(e.getSource() == sendButton){
                     try {
                         if(currentRegistrationList != null){
-                            newReport().createFile();
-                            reportsNumber++;
-                            currentRegistrationList.remove(currentRegistrationList.get(currentRegistrationID));
+                            newReport();
+                            currentReport.createFile();
+                            ++reportsNumber;
+                            currentRegistrationList.get(currentRegistrationID).setStatus("sended");
+                            writeRegistration(currentRegistrationList);
+                            currentRegistrationList = readRegistration();
+                            currentRegistrationID = 0;
+                            uploadRegistration(currentRegistrationID);
+                            newReport();
                         }
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
@@ -181,11 +182,22 @@ public class KontrolerApp extends JFrame {
         }
         return registrationList;
     }
+    public void writeRegistration(List<Registration> registrationList) throws IOException {
+        File file = new File(this.regFile);
+        file.createNewFile();
 
-    public Report newReport() throws IOException {
+        for (int i=0; i<registrationList.size(); i++){
+            Registration registration = registrationList.get(i);
+            if(i==0)
+                registration.createFile(registration.getStatus(), false);
+            else
+                registration.createFile(registration.getStatus(), true);
+        }
+    }
+
+    public void newReport() throws IOException {
         this.currentReport = new Report(this.reportsNumber, currentRegistrationList.get(currentRegistrationID).getId_registration(), descriptionField.getText());
         setUpReportLabels();
-        return this.currentReport;
     }
 
     private void setUpReportLabels(){
